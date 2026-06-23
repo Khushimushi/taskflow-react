@@ -11,12 +11,12 @@ function TaskItem ({ task, index, handleDeleteTask, markComplete }) { //Receives
 
             <div className="flex gap-2">
 
-                <button type="button" onClick={() => handleDeleteTask(index)}
+                <button type="button" onClick={() => handleDeleteTask(task._id)}
                     className="bg-red-500 text-white px-3 py-1 rounded">
                     Delete
                 </button>
 
-                <button type="button" onClick={() => markComplete(index)}
+                <button type="button" onClick={() => markComplete(task._id)}
                    className="bg-green-500 text-white px-3 py-1 rounded">
                    {task.completed ? "Undo" : "Completed"} {/*Conditional Rendering*/}
                 </button>

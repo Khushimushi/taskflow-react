@@ -55,7 +55,7 @@ function TaskList({ tasks, handleDeleteTask, markComplete }) {
             {/*Render Tasks*/}
             {tasks.map((task, index) => (
                 <TaskItem           //One TaskItem per task
-                    key={task.id}   //React uses keys to track items (internally)
+                    key={task._id}   //React uses keys to track items (internally)
                     task={task}
                     index={index}   //for my code
                     handleDeleteTask={handleDeleteTask}
