@@ -131,13 +131,21 @@ function Dashboard () {
 
     };
 
-    console.log(task);
-    console.log(tasks);
-
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center pt-10">
             <div className="bg-white p-8 rounded-xl shadow-lg w-[600px]">
-               <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold">
+                        Dashboard
+                    </h1>
+
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 text-white px-4 py-2 rounded"
+                    >
+                        Logout
+                    </button>
+                </div>
                 
                 {/*Props*/}
                 <TaskForm //Handles input and add button
@@ -151,13 +159,6 @@ function Dashboard () {
                 handleDeleteTask={handleDeleteTask}
                 markComplete={markComplete}
                 />
-
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                >
-                    Logout
-                </button>
 
             </div>
         </div>
