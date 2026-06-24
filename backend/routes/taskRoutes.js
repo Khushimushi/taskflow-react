@@ -3,6 +3,7 @@
 
 const express = require("express"); //for routes
 const router = express.Router(); //mini express app
+const protect = require("../middleware/authMiddleware");
 
 
 //logic in taskController
@@ -13,9 +14,9 @@ const {
     updateTask
 } = require("../controllers/taskController");
 
-router.get("/", getTasks);  //read
-router.post("/", createTask);  
-router.delete("/:id", deleteTask);
-router.put("/:id", updateTask);
+router.get("/", protect, getTasks);  //read
+router.post("/", protect, createTask);  
+router.delete("/:id", protect, deleteTask);
+router.put("/:id", protect, updateTask);
 
 module.exports = router;  //makes router available elsewhere
