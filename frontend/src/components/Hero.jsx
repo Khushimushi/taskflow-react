@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Hero() {
     return (
         <div className="bg-gradient-to-r from-blue-600 to-cyan-500
-                        text-white p-10 py-20">
+                        text-white p-10 py-37.5">
 
             <div className="max-w-4xl mx-auto text-center">
             
@@ -25,13 +25,7 @@ function Hero() {
                <br />
             
                <br />
-               <div className="mt-12">
-                    <ul className="space-y-4 text-xl">
-                        <li>✓ Create Tasks</li>
-                        <li>✓ Track Progress</li>
-                        <li>✓ Stay Organized</li>
-                    </ul>
-               </div>
+               
             </div>
         </div>
     );

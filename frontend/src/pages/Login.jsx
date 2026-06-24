@@ -26,8 +26,9 @@ function Login() {
 
        } catch (error) {
         
+        console.log(error.response?.data)
         console.error(error);
-        alert("Invalid credentials");
+        alert(error.response?.data?.message);
 
        }
 
