@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import TaskForm from "../components/task/TaskForm";
 import TaskList from "../components/task/TaskList";
-import axios from "axios"; 
+import api from "../services/api"; 
 import { useNavigate } from "react-router-dom";
 
 function Dashboard () {
@@ -18,19 +18,10 @@ function Dashboard () {
         try {
 
             const token = localStorage.getItem("token");
+            const response = await api.get("/tasks");
 
-            const response = await axios.get( 
-                "http://localhost:5000/api/tasks",  //to express
-                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-
-            );
-
-        setTasks(response.data);  //updates state
-        console.log("Fetched:", response.data);
+            setTasks(response.data);  //updates state
+            console.log("Fetched:", response.data);
 
         } catch (error) {
             
@@ -54,16 +45,7 @@ function Dashboard () {
             const token = localStorage.getItem("token");
 
             //req to backend
-            await axios.post("http://localhost:5000/api/tasks", {
-               text: task
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-
-        );
+            await api.post("/tasks", { text: task });
 
             await fetchTasks();
             setTask("");  //input becomes empty
@@ -79,16 +61,7 @@ function Dashboard () {
 
             const token = localStorage.getItem("token");
 
-            await axios.delete(
-                `http://localhost:5000/api/tasks/${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-
-            );
-
+            await api.delete(`tasks/${id}`);
             await fetchTasks();
 
         } catch (error) {
@@ -102,25 +75,13 @@ function Dashboard () {
 
             const token = localStorage.getItem("token");
 
-            await axios.put(
-                `http://localhost:5000/api/tasks/${id}`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-
-            );
-            
+            await axios.put(`tasks/${id}`);
             await fetchTasks();  //reloads latest data
 
         } catch (error) {
 
             console.error(error);
-
         }
-
         
     };
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function Register() {
 
@@ -8,8 +9,9 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -19,12 +21,26 @@ function Register() {
 
         setError(""); //Clears error if pass matches after the prev unmatch
 
-        console.log({
-           name,
-           email,
-           password,
-           confirmPassword
-        });
+        try {
+            
+            const response = await api.post(
+                "auth/register",
+                { name, email, password }
+            );
+
+            localStorage.setItem(
+               "token",
+               response.data.token
+            );
+
+            alert("Registratio successful");
+            navigate("/dashboard");
+
+        } catch (error) {
+
+            console.error(error);
+            alert(error.response?.data?.message || "Registration failed");
+        }
     };
 
     return (
