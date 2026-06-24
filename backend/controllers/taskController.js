@@ -1,59 +1,42 @@
+//controls CRUD of tasks
+
 const Task = require("../models/Task"); //MOngoDB Atas connection
 
-//let tasks = [];  temp DB
-
-const getTasks = async (req, res) => { //gets all tasks and returns an array
+//gets all tasks from DB; returns an array
+const getTasks = async (req, res) => { 
     const tasks = await Task.find();
-    res.json(tasks);
+    res.json(tasks);  //sends tasks back to Backend
 };
 
-const createTask = async (req, res) => { //req body; create doc; store in atlas
-    /*const newTask = {
-        id: Date.now(),
-        text: "Learn Express",
-        completed: false
-    };*/
-
+//creates new task doc in DB
+const createTask = async (req, res) => {
+   
     const newTask = await Task.create({
-        text: req.body.text
+        text: req.body.text   //contains _id, text, completed
     });
 
-    //tasks.push(newTask);  Stored in RAM & added to array
-
-    res.status(201).json(newTask);
+    res.status(201).json(newTask);  //returns created task
 };
 
-const deleteTask = async (req, res) => {  //url; id; delete matching doc
-    /*const taskId = Number(req.params.id);
-    tasks = tasks.filter(     //keeps everything except matching task 
-        task => task.id !== taskId
-    );*/
+//delete a task by searching it's id
+const deleteTask = async (req, res) => { 
 
-    await Task.findByIdAndDelete(req.params.id);
+    await Task.findByIdAndDelete(req.params.id);  //req.params.id gives id
 
     res.json({
         message: "Task deleted"
     });
 };
 
+//toggle completed status
 const updateTask = async (req, res) => {
 
     const task = await Task.findById(req.params.id);
     task.completed = !task.completed;
-    await task.save();
 
-    /*const taskId = Number(req.params.id);
-    tasks = tasks.map(task => {
-        if (task.id === taskId) {
-            return {
-                ...task,   //copies all existing properties
-                completed: !task.completed
-            };
-        }
-        return task;
-    });*/
+    await task.save();  //memory & db changed
 
-    res.json({task});   //message: "Task updated"
+    res.json({task});   //returns updated doc
 };
 
 module.exports = {

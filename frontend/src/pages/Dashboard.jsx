@@ -1,26 +1,22 @@
+//manages task-related state, comm with backend api using Axios,
+//handles CRUD operations, passes data & func to child components through props
+
 import { useState, useEffect } from "react";
 import TaskForm from "../components/task/TaskForm";
 import TaskList from "../components/task/TaskList";
-import axios from "axios";
+import axios from "axios"; 
 
 function Dashboard () {
 
-    const [task, setTask] = useState("");
-    const [tasks, setTasks] = useState([]);
+    const [task, setTask] = useState("");   //what's inside input box
+    const [tasks, setTasks] = useState([]);  //stores all tasks
 
-        /*const savedTasks = localStorage.getItem("tasks");
-
-        return savedTasks
-            ? JSON.parse(savedTasks)
-            : [];
-    });   DB for task (for now) and runs after every render*/
-
-    const fetchTasks = async () => {
+    const fetchTasks = async () => {  //gets all tasks from backend
         try {
-            const response = await axios.get(
-                "http://localhost:5000/api/tasks"
+            const response = await axios.get( 
+                "http://localhost:5000/api/tasks"  //to express
             );
-        setTasks(response.data);
+        setTasks(response.data);  //updates state
         console.log("Fetched:", response.data);
 
         } catch (error) {
@@ -29,6 +25,7 @@ function Dashboard () {
         }
     };
 
+    //mount component->fetch tasks->update state->render tasks
     useEffect(() => {
             fetchTasks();
     }, []);  //[] means run once
@@ -36,38 +33,22 @@ function Dashboard () {
     const handleAddTask = async (e) => {
         e.preventDefault();  //No refresh
 
-        //console.log("Button Clicked");
-        //console.log(task);
-
-        if (!task.trim()) { //Rejects empty lists
+        if (!task.trim()) { //Rejects empty lists & removes spaces
             return;
         }
 
-        try {
+        try {  //req to backend
             await axios.post("http://localhost:5000/api/tasks", {
                text: task
             });
 
             await fetchTasks();
-            setTask("");
+            setTask("");  //input becomes empty
 
         } catch (error) {
 
             console.error(error);
         }
-
-        /*setTasks([ //Adds new task
-            ...tasks,
-            {
-                id: Date.now(),
-                text: task,
-                completed: false,
-                createdAt: new Date()
-            }
-        ]);
-
-        setTask("");
-        console.log("task value", task);*/
     };
 
     const handleDeleteTask = async (id) => {
@@ -80,19 +61,10 @@ function Dashboard () {
         }
     };
 
-    /*const handleDeleteTask = (index) => {
-            setTasks(
-                tasks.filter(
-                    (task, taskIndex) =>
-                        taskIndex !== index
-                )
-            );
-    };*/
-
     const markComplete = async (id) => {
         try {
             await axios.put(`http://localhost:5000/api/tasks/${id}`);
-            await fetchTasks();
+            await fetchTasks();  //reloads latest data
 
         } catch (error) {
 
@@ -100,49 +72,15 @@ function Dashboard () {
         }
     };
 
-    /*const markComplete = (index) => {
-        setTasks(
-
-            tasks.map(  //map creates new array for completed tasks
-                (task, taskIndex) => {
-                    if (taskIndex === index) {
-                        return {
-                           ...task,
-                           completed: !task.completed
-                       };
-                    }
-                return task;
-            })
-        );
-    }*/
-
     console.log(task);
-
-    /*useEffect(() => { //when tasks changes, they get stored inside the browser
-        localStorage.setItem( //localStorage saves strings only
-            "tasks",
-            JSON.stringify(tasks)
-        );
-    }, [tasks]); //runs only when tasks changes
-
-    useEffect(() => {
-        const savedTasks = 
-           localStorage.getItem("tasks");
-
-        if (savedTasks) {
-            setTasks(
-                JSON.parse(savedTasks) //string <=> array
-            );
-        }
-    }, []);*/ //runs once when component loads
-
     console.log(tasks);
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center pt-10">
             <div className="bg-white p-8 rounded-xl shadow-lg w-[600px]">
                <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-
+                
+                {/*Props*/}
                 <TaskForm //Handles input and add button
                     task={task}
                     setTask={setTask}
@@ -156,7 +94,6 @@ function Dashboard () {
                 />
 
             </div>
-
         </div>
     );
 }
