@@ -10,15 +10,15 @@ function Footer() {
 
                 <span>© 2026 TaskFlow, Inc.</span>
 
-                <a href="#" className="hover:text-white">Terms</a>
+                <a href="#" className="hover:text-blue-600 transition">Terms</a>
 
-                <a href="#" className="hover:text-white">Privacy</a>
+                <a href="#" className="hover:text-blue-600 transition">Privacy</a>
 
-                <a href="#" className="hover:text-white">Security</a>
+                <a href="#" className="hover:text-blue-600 transition">Security</a>
 
-                <a href="#" className="hover:text-white">Docs</a>
+                <a href="#" className="hover:text-blue-600 transition">Docs</a>
 
-                <a href="#" className="hover:text-white">Contact</a>
+                <a href="#" className="hover:text-blue-600 transition">Contact</a>
 
             </div>
         </footer>
