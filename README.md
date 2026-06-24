@@ -1,6 +1,6 @@
 # TaskFlow
 
-A full-stack task management application built using React, Express, and MongoDB.
+A full-stack task management application built using React, Express and MongoDB.
 
 ## Features
 
@@ -30,7 +30,7 @@ A full-stack task management application built using React, Express, and MongoDB
 
 TaskFlow
 ├── frontend
-└── backend
+|── backend
 
 ## Installation
 
