@@ -1,5 +1,6 @@
 //contains logic for registrating/authenticating a user.
 
+const jwt = require("jsonwebtoken");
 const User = require("../models/User"); //need to interact with user collection in DB
 const bcrypt = require("bcryptjs");  //imports bcrypt lib
 
@@ -36,4 +37,41 @@ const registerUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser };
+const loginUser = async (req, res) => {
+
+    try {
+        const { email, password} = req.body;
+        const user = await User.findOne({
+            email
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid credentials"
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid credentials"
+            });
+        }
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.json({ token });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+module.exports = { registerUser, loginUser };
