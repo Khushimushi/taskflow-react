@@ -14,7 +14,14 @@ const taskSchema = new mongoose.Schema({  //Schema = blueprint
     completed: {
         type: Boolean,
         default: false,
+    },
+
+    user: {
+        type: mongoose.Schema.Types.ObjectId,  //ObjectId stores ongodb doc id
+        ref: "User",  //tells mongoose this objid points to a User doc
+        required: "true"
     }
+
 }, {
     timestamps: true  //automatically creates createdAt/updatedAt
 });
