@@ -18,8 +18,6 @@ function Login() {
             {email, password}
         );
 
-        console.log(response.data);
-
         localStorage.setItem(
             "token", response.data.token
         );
@@ -32,6 +30,7 @@ function Login() {
         alert("Invalid credentials");
 
        }
+
     };
 
     return (
