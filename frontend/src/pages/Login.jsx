@@ -1,16 +1,37 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
     //State variables
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
        e.preventDefault();
 
-       console.log(email);
-       console.log(password);
+       try {
+
+        const response = await axios.post(
+            "http://localhost:5000/api/auth/login",
+            {email, password}
+        );
+
+        console.log(response.data);
+
+        localStorage.setItem(
+            "token", response.data.token
+        );
+
+        navigate("/dashboard");
+
+       } catch (error) {
+        
+        console.error(error);
+        alert("Invalid credentials");
+
+       }
     };
 
     return (
