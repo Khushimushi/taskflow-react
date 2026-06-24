@@ -25,25 +25,38 @@ A full-stack task management application built using React, Express and MongoDB.
 - MongoDB Atlas
 - Mongoose
 - bcryptjs
-
+  
 ## Project Structure
-
+```
 TaskFlow
 ├── frontend
-|── backend
-
+│   ├── src
+│   ├── public
+│   └── package.json
+│
+└── backend
+    ├── config
+    ├── controllers
+    ├── middleware
+    ├── models
+    ├── routes
+    ├── .env.example
+    ├── server.js
+    └── package.json
+```
 ## Installation
 
 ### Frontend
 
+```
 npm install
 npm run dev
-
+```
 ### Backend
-
+```
 npm install
 npm run dev
-
+```
 ## Future Improvements
 
 - Login System
