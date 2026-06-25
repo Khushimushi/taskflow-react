@@ -4,12 +4,45 @@ import api from "../services/api";
 
 function Register() {
 
+    //registration variables
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+   
+    //error/success variables
     const [error, setError] = useState("");
+    //const [success, setSuccess] = useState("");
+
+    //navigation
     const navigate = useNavigate();
+
+    //password validation
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[^A-Za-z0-9]/.test(password);
+    const hasLength = password.length >= 8;
+
+    const requirements = [
+        {
+            text: "One uppercase letter",
+            valid: hasUpperCase
+        },{
+            text: "One lowercase letter",
+            valid: hasLowerCase
+        },{
+            text: "One number",
+            valid: hasNumber
+        },{
+            text: "One special character",
+            valid: hasSpecial
+        },{
+            text: "At least 8 characters",
+            valid: hasLength
+        } 
+    ];
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,19 +61,17 @@ function Register() {
             return;
         }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+        //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
 
-        if (!passwordRegex.test(password)) {
-            setError(
-                "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
-            );
+        if (!hasLength || !hasLowerCase || !hasNumber || !hasSpecial || !hasUpperCase) {
+            setError("Password does not meet all requirements.");
             return;
         }
 
         try {
             
             const response = await api.post(
-                "auth/register",
+                "/auth/register",
                 { name, email, password }
             );
 
@@ -49,13 +80,13 @@ function Register() {
                response.data.token
             );
 
-            alert("Registratio successful");
+            setError("");
             navigate("/dashboard");
 
         } catch (error) {
 
             console.error(error);
-            alert(error.response?.data?.message || "Registration failed");
+            setError(error.response?.data?.message || "Registration failed");
         }
     };
 
@@ -107,6 +138,20 @@ function Register() {
                                   focus:ring-2
                                   focus:ring-blue-500"
                     />
+                    {password && (
+                        <div className="mt-2 space-y-1">
+                            <p className="text-sm font-semibold text-gray-700 mt-2">Password Requirements:</p>
+                            {requirements.map((requirement, index) => {
+                                return (
+                                   <p key={index} 
+                                   className={requirement.valid ? "text-green-600" : "text-gray-400"}>
+                                      ● {requirement.text}
+                                   </p>
+                                );
+                            })}
+                        </div>
+                    )}
+
                     <label className="block mb-1 font-medium">Confirm Password</label>
                     <input 
                         type="password"
