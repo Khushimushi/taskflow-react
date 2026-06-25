@@ -21,6 +21,22 @@ function Register() {
 
         setError(""); //Clears error if pass matches after the prev unmatch
 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid Gmail address.");
+            return;
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setError(
+                "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+            );
+            return;
+        }
+
         try {
             
             const response = await api.post(
