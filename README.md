@@ -139,7 +139,7 @@ VITE_API_URL=https://taskflow-react.onrender.com/api
 * Toast Notifications
 * Forgot Password
 
-## 👩‍💻 Author
+## Author
 
 **Khushi Goyal**
 
