@@ -110,7 +110,11 @@ function Register() {
                        type="text"
                        placeholder="Name"
                        value={name}
-                       onChange={(e) => setName(e.target.value)}
+                       onChange={(e) => {
+                           setName(e.target.value);
+                           setError("");
+                       }}
+
                        className="border rounded-md w-full p-3
                                   focus:outline-none
                                   focus:ring-2
@@ -121,7 +125,11 @@ function Register() {
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setError("");
+                        }}
+
                         className="border rounded-md w-full p-3
                                   focus:outline-none
                                   focus:ring-2
@@ -132,7 +140,11 @@ function Register() {
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setError("");
+                        }}
+                        
                         className="border rounded-md w-full p-3
                                   focus:outline-none
                                   focus:ring-2
@@ -157,7 +169,11 @@ function Register() {
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => {
+                            setConfirmPassword(e.target.value);
+                            setError("");
+                        }}
+
                         className="border rounded-md w-full p-3
                                   focus:outline-none
                                   focus:ring-2
