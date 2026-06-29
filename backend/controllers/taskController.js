@@ -27,7 +27,7 @@ const deleteTask = async (req, res) => {
         user: req.user.id
     });  
 
-    if (!task) {
+    if (!Task) {
         return res.status(404).json({
             message: "Task not found"
         });

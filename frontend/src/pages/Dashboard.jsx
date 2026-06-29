@@ -61,7 +61,7 @@ function Dashboard () {
 
             const token = localStorage.getItem("token");
 
-            await api.delete(`tasks/${id}`);
+            await api.delete(`/tasks/${id}`);
             await fetchTasks();
 
         } catch (error) {
@@ -75,7 +75,7 @@ function Dashboard () {
 
             const token = localStorage.getItem("token");
 
-            await axios.put(`tasks/${id}`);
+            await api.put(`/tasks/${id}`);
             await fetchTasks();  //reloads latest data
 
         } catch (error) {

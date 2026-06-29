@@ -7,8 +7,34 @@ const bcrypt = require("bcryptjs");  //imports bcrypt lib
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;  //req.body: data sent by client
+        const trimmedName = name.trim();
+        const trimmedEmail = email.trim().toLowerCase();
+
+        if (trimmedName.length < 3) {
+            return res.status(400).json({
+                message: "Name must contain at least 3 characters long."
+            });
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+        if (!emailRegex.test(trimmedEmail)) {
+            return res.status(400).json({
+                message: "Invalid Gmail address"
+            });
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                message:
+                    "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+            });
+        }
+
         const existingUser = await User.findOne({    //findOne: searches DB for 1 matching doc
-            email
+            email: trimmedEmail
         });
 
         //Prevents duplicate registration
@@ -23,7 +49,9 @@ const registerUser = async (req, res) => {
 
         //saves new user
         const user = await User.create({
-            name, email, password: hashedPassword
+            name: trimmedName, 
+            email: trimmedEmail, 
+            password: hashedPassword
         });
 
         const token = jwt.sign(
@@ -45,8 +73,10 @@ const loginUser = async (req, res) => {
 
     try {
         const { email, password} = req.body;
+        const trimmedEmail = email.trim().toLowerCase();
+
         const user = await User.findOne({
-            email
+            email: trimmedEmail
         });
 
         if (!user) {
