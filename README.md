@@ -124,10 +124,6 @@ For production:
 VITE_API_URL=https://taskflow-react.onrender.com/api
 ```
 
-## 📸 Screenshots
-
-*Add screenshots of the Home page, Login, Register, and Dashboard here.*
-
 ## Future Improvements
 
 * Task Categories
